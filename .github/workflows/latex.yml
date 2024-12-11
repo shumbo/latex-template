@@ -9,8 +9,22 @@ on:
       - main
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Perl
+        run: sudo apt-get install -y perl
+      - name: Clone latexindent.pl
+        run: git clone https://github.com/cmhughes/latexindent.pl.git /tmp/latexindent.pl
+      - name: Checkout the latest release
+        run: git -C /tmp/latexindent.pl checkout V3.24.4
+      - name: Check Format
+        run: make LATEXINDENT="perl /tmp/latexindent.pl/latexindent.pl" fmt-check
+
   build:
     runs-on: ubuntu-latest
+    needs: check
     steps:
       - uses: actions/checkout@v4
       - uses: xu-cheng/latex-action@v3
