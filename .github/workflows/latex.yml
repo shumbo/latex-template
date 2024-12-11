@@ -32,7 +32,7 @@ jobs:
         with:
           root_file: main.tex
           args: -xelatex -shell-escape -output-directory=build -halt-on-error -pdf -interaction=nonstopmode
-          texlive_version: 2024
+          texlive_version: 2023
       - uses: actions/upload-artifact@v4
         with:
           name: main-${{ github.sha }}.pdf
