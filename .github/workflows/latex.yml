@@ -10,11 +10,11 @@ on:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - name: Install Perl
-        run: sudo apt-get install -y perl
+        run: sudo apt-get install -y perl libyaml-tiny-perl libfile-homedir-perl
       - name: Clone latexindent.pl
         run: git clone https://github.com/cmhughes/latexindent.pl.git /tmp/latexindent.pl
       - run: git -C /tmp/latexindent.pl fetch --all --tags
@@ -24,7 +24,7 @@ jobs:
         run: make LATEXINDENT="perl /tmp/latexindent.pl/latexindent.pl" check-fmt
 
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: check
     steps:
       - uses: actions/checkout@v4
