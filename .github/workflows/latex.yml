@@ -17,6 +17,7 @@ jobs:
         run: sudo apt-get install -y perl
       - name: Clone latexindent.pl
         run: git clone https://github.com/cmhughes/latexindent.pl.git /tmp/latexindent.pl
+      - run: git -C /tmp/latexindent.pl fetch --all --tags
       - name: Checkout the latest release
         run: git -C /tmp/latexindent.pl checkout V3.24.4
       - name: Check Format
