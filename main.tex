@@ -118,6 +118,11 @@
 \usepackage{hyperref}
 \usepackage{svg}
 
+%% CUSTOM COMMANDS
+\newcommand{\todo}[1]
+   {{\color{red} \fbox{\bfseries\sffamily\scriptsize{TODO}}
+   {\small$\blacktriangleright$\textsf{\emph{#1}}$\blacktriangleleft$}}~}
+
 %%
 %% end of the preamble, start of the body of the document source.
 \begin{document}
@@ -279,12 +284,25 @@ def incmatrix(genl1,genl2):
     n = len(genl2)
     M = None # Comprehension on the next line
     return M
-\end{minted}
+    \end{minted}
+    \Description[Sample Python code]{Sample Python code with a function.}
     \caption{Python code}
     \label{fig:python}
 \end{figure}
 
 \paragraph{Cleveref} Essential for cross-referencing. \Cref{sec:intro} is an introduction. \Cref{fig:python} is a Python code.
+
+\paragraph{SVG} SVG should work. See \cref{fig:svg-sample}.
+
+\begin{figure}
+    \centering
+    \includesvg{figures/couch.svg}
+    \caption{Sample SVG image}
+    \Description[Sample SVG image]{Sample SVG image with a green couch.}
+    \label{fig:svg-sample}
+\end{figure}
+
+\paragraph{TODO} Use \mintinline{latex}{\todo{}} to mark todos. \todo{This is a todo.}
 
 \section{Introduction}
 \label{sec:intro}
