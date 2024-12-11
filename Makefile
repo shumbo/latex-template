@@ -9,15 +9,34 @@ LATEXMK_ARGS += -shell-escape
 LATEXMK_ARGS += -output-directory=build
 # -halt-on-error automatically aborts out of the TeX prompt on error.
 LATEXMK_ARGS += -halt-on-error
-LATEXMK_ARGS += -pvc
 LATEXMK_ARGS += -pdf
-LATEXMK := latexmk ${LATEXMK_ARGS}
+LATEXMK := latexmk
+
+LATEXINDENT_ARGS :=
+LATEXINDENT_ARGS += -c build
+LATEXINDENT_ARGS += -y="defaultIndent: '    '"
+LATEXINDENT := latexindent
 
 PAPER=main
 
 .PHONY: default
-default:
-	${LATEXMK} ${PAPER}
+default: watch
+
+.PHONY: watch
+watch:
+	${LATEXMK} ${LATEXMK_ARGS} -pvc ${PAPER}
+
+.PHONY: build
+build:
+	${LATEXMK} ${LATEXMK_ARGS} ${PAPER}
+
+.PHONY: fmt
+fmt:
+	${LATEXINDENT} -w ${LATEXINDENT_ARGS} ${PAPER}.tex
+
+.PHONY: check-fmt
+check-fmt:
+	${LATEXINDENT} -k ${LATEXINDENT_ARGS} ${PAPER}.tex
 
 .PHONY: clean
 clean:
