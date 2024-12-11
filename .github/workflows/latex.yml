@@ -21,7 +21,7 @@ jobs:
       - name: Checkout the latest release
         run: git -C /tmp/latexindent.pl checkout V3.24.4
       - name: Check Format
-        run: make LATEXINDENT="perl /tmp/latexindent.pl/latexindent.pl" fmt-check
+        run: make LATEXINDENT="perl /tmp/latexindent.pl/latexindent.pl" check-fmt
 
   build:
     runs-on: ubuntu-latest
