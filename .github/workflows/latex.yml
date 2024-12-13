@@ -41,9 +41,23 @@ jobs:
         with:
           name: main-${{ github.sha }}.pdf
           path: build/main.pdf
-      - uses: octokit/request-action@v2.x
+      - uses: actions/upload-pages-artifact@v1
+        if: github.ref == 'refs/heads/main'
         with:
-          route: PATCH /repos/${{ github.repository }}
-          homepage: ${{ steps.artifact.outputs.artifact-url }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # location of the coverage artifacts
+          path: "./build"
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-22.04
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
