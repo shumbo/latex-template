@@ -26,6 +26,8 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     needs: check
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - uses: xu-cheng/latex-action@v3
@@ -35,6 +37,13 @@ jobs:
           texlive_version: 2023
           extra_system_packages: "inkscape"
       - uses: actions/upload-artifact@v4
+        id: artifact
         with:
           name: main-${{ github.sha }}.pdf
           path: build/main.pdf
+      - uses: octokit/request-action@v2.x
+        with:
+          route: PATCH /repos/${{ github.repository }}
+          homepage: ${{ steps.artifact.outputs.artifact-url }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
