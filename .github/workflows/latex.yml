@@ -34,14 +34,14 @@ jobs:
         with:
           root_file: main.tex
           args: -xelatex -shell-escape -output-directory=build -halt-on-error -pdf -interaction=nonstopmode
-          texlive_version: 2023
+          texlive_version: 2024
           extra_system_packages: "inkscape"
       - uses: actions/upload-artifact@v4
         id: artifact
         with:
           name: main-${{ github.sha }}.pdf
           path: build/main.pdf
-      - uses: actions/upload-pages-artifact@v1
+      - uses: actions/upload-pages-artifact@v3
         if: github.ref == 'refs/heads/main'
         with:
           # location of the coverage artifacts
@@ -60,4 +60,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
